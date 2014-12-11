@@ -1,0 +1,109 @@
+
+/* LIGHTBOX STYLES */
+#user-profile-template{
+	display: none;
+}
+
+.lightbox {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	top: 0;
+	left: 0;
+	background-image: url(../images/concert_bg.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: 50% 40%;
+}
+
+.lightbox form{
+	margin-top: 15em;
+}
+
+
+.main-heading{
+	margin-left: 3em;
+	margin-bottom: 1em;
+	}
+
+.lightbox input[type="text"] {
+	font-size: 1em;
+	border: none;
+   	color: #D3D3D3;
+    height: 30px;
+    margin-bottom: 1em;
+    margin-left: -5px;
+    margin-top: .25em;
+    outline: 0 none;
+    padding: .2em 1em .2em 0em;
+    width: 50%;
+    border-radius: .2em;
+    -webkit-border-radius: .2em;
+    -moz-border-radius: .2em;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    background: rgba(0, 0, 0, 0.4);
+    text-align: right;
+}
+
+.lightbox input[type="image"] {
+	position: relative;
+	top: 5em;
+	left: 2.5em;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 1em 1em 1em 1em;
+	padding: .5em;
+}
+
+.lightbox input[type="image"]: {
+	visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+/* MAIN CONTENT STYLES */
+
+
+.container {
+	width: 900px;
+	height: 900px
+	border: 1px solid grey;
+	margin: auto;
+}
+
+section {
+	width: 100%;
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+section div {
+		margin: .5em auto;
+		width: 250px;
+		height: 250px;
+		position: relative;
+}
+
+.songTitle {
+	height: 20%;
+	width: 250px;
+	float: left;
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   background-color: rgba(0,0,0, 0.4);
+   color: grey;
+   font-weight: bold;
+   display: none;
+}
+
+.newSong:hover .songTitle {
+		display: block;
+}
+
