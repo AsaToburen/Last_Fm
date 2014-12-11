@@ -21,25 +21,25 @@ function outToLastFM(userEntry) {
 	};
 	url = 'http://ws.audioscrobbler.com/2.0/';
 	$.getJSON(url, params, function(data){
+			
+			var storeImageData = "";
 			$('.container').show();
 			$('.lightbox').hide();
 			var artistArray = data.similarartists.artist;
-			var output = "";
+			console.log(artistArray);
 
 		$.each(artistArray, function (key, value){
 			 var imageObj = value.image[3];
-			  imageUrl = imageObj['#text'];
-			 var update = document.getElementsByTagName('section div')
-			 console.log(imageUrl);
-			
+			 var imageUrl = imageObj['#text'];
+			 var artistName = value.name;
+			 console.log(artistName);
+			 storeImageData = storeImageData + '<div class="newSong"><img src="' + imageUrl + '"><span class="songTitle"><h2 class="artistTitle">' + artistName + '</h2></span></div>';
 		});
-		//output += '<img src="' + imageUrl + '">'
-				var results = $('.newSong').html("<img src='" + imageUrl + "'>");
+
+		
+		$('#songs').html(storeImageData);
+
+			
 	});
-	
-
-
-
-
 };
 });
