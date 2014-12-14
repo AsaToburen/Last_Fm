@@ -1,45 +1,127 @@
 $(document).ready(function(){
 
-	$('.container').hide();  ///set values in css to display hidden on default
+	$('#container').hide();  ///set values in css to display hidden on default
 	$('.lightbox').show();
+	var audioObject = null;
 
-$("form").submit(function(event){
+
+$('#userMusic').submit(function(event){
 	event.preventDefault();
 	//gets value from form
 	var userInput = document.getElementById('search_field').value;
-	//call ajax function
-	outToLastFM(userInput);
+	//call getJSON function
+	getArtistInfo(userInput);
 });
 
-function outToLastFM(userEntry) {
+$('#searchNew').submit(function(event){
+	event.preventDefault();
+	var userInput = document.getElementById('new').value;
+	audioObject.pause();
+	getArtistInfo(userInput);
+});
+
+
+function getArtistInfo(artistName){
 	var params = {
-		method: "artist.getsimilar",
-		artist: userEntry,
+		method: "artist.getInfo",
+		artist: artistName,
+		autocorrect: 1,
 		api_key: "c448100138ee7b3212c19d70c0a1830b",
-		limit: 8,
 		format: "json"
 	};
+
 	url = 'http://ws.audioscrobbler.com/2.0/';
-	$.getJSON(url, params, function(data){
-			
+		$.getJSON(url, params, function(data){
+			console.log(data);
 			var storeImageData = "";
-			$('.container').show();
+			var artistArray = data.artist.similar.artist;
+			var mainArtistName = data.artist.name;
+			var artistBio = data.artist.bio.summary;
+			var mainArtistImage = data.artist.image[4]['#text'];
+			$('#container').show();
 			$('.lightbox').hide();
-			var artistArray = data.similarartists.artist;
-			console.log(artistArray);
 
-		$.each(artistArray, function (key, value){
-			 var imageObj = value.image[3];
-			 var imageUrl = imageObj['#text'];
-			 var artistName = value.name;
-			 console.log(artistName);
-			 storeImageData = storeImageData + '<div class="newSong"><img src="' + imageUrl + '"><span class="songTitle"><h2 class="artistTitle">' + artistName + '</h2></span></div>';
+			$.each(artistArray, function (key, value){
+				console.log('ran');
+				 var imageObj = value.image[3];
+				 var artistName = value.name;
+				 var imageUrl = imageObj['#text'];
+				 storeImageData = storeImageData + '<div class="newSong"><p class="nextArtistName">' + artistName + '</p><img alt="' + artistName + '"src="' + imageUrl + '"></div>';
 		});
+			$('#artImage').html('<img src="' + mainArtistImage + '">');
+			$('#songs').html(storeImageData);
+			$('#artistDiv').html('<h2 class="artName">' + mainArtistName + '<span id="pause" class="mega-octicon octicon-playback-pause"></span><span id="play" class="mega-octicon octicon-playback-play"></span></h2><div>' + artistBio + '</div>');
+			$('#art-name').html(mainArtistName);
+			searchAlbums(artistName);
+});
+	};
 
-		
-		$('#songs').html(storeImageData);
+var getTracks = function (albumId, callback) {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/albums/' + albumId,
+        success: function (response) {
+        	            callback(response);
+        }
+    });
+};
 
-			
-	});
+
+
+function searchAlbums(userEntry) {
+     	$.ajax({
+        url: 'https://api.spotify.com/v1/search',
+        data: {
+            q: 'artist:' + userEntry,
+            type: 'album',
+            market: "US"
+        },
+        success: function (response) {
+            console.log(response);
+            var albumId = response.albums.items[0].id;
+            console.log(albumId);
+
+
+            getTracks(albumId, function(data) {            
+                audioObject = new Audio(data.tracks.items[0].preview_url);
+                audioObject.pause();
+                audioObject.addEventListener('ended', function() {
+                    console.log('ended');
+                });
+                audioObject.addEventListener('pause', function() {
+                    console.log('paused');
+               });
+            });   
+        }
+    });
+
+ $('#play').click(function(){
+ 	audioObject.play();
+	$('#play').hide();
+	$('#pause').show();
+});
+
+ $('#pause').click(function() {
+ 	audioObject.pause();
+ 	$('#play').show();
+	$('#pause').hide();
+
+ });
+
+ document.getElementById('songs').addEventListener('click', function(e) {
+ 
+ //	//works to get name if click happens on img or p
+ 	console.log('audioObject');
+ 	audioObject.pause();
+ 	var nextArtistName = e.target.parentNode.childNodes[0].innerHTML;
+ 	console.log(nextArtistName);
+
+ 	var userInput = nextArtistName;
+ 	getArtistInfo(nextArtistName);
+	console.log(e.target);
+	}, false);
 };
 });
+
+
+
+

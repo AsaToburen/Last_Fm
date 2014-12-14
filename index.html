@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8"><link rel="stylesheet" href="octicons/octicons.css">
+	<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Music Explorer</title>
 </head>
 
 <body>
+	<header>
+		<form id="searchNew">
+			<input type="search" id="new" placeholder="Search">
+		</form>
+		<h1>Discover New Music</h1>
+	</header>
 	<div class="lightbox">
-		<form class="userMusic" onsubmit="return false;">
-		<h2 class="main-heading">Enter your favorite artist to find new music<h2>
+		<form id="userMusic" onsubmit="return false;">
+		<h2 class="main-heading">Enter your favorite artist and find new music<h2>
 		<input type="text" id="search_field" placeholder="Search by Artist" name="artist" size="30" autofocus required>
-				<input type="image" id="submit" img src="images/disc_icon.png">
 				</form>
 	</div>
-	<div class="container">
+	<div id="container">
+		<section id="mainArtist">
+			<div id="artImage"></div>
+			<div id="artistDiv"></div>
+			<div id="section-header"></div>
+		</section>
 		<section id="songs">
-			
-			
 		</section>
 	<div>
-	<script type="text/javascript" src="js/jquery2.js"></script>
+
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 
 </body>
 </html>
+
+
