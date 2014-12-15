@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 	$('#container').hide();  ///set values in css to display hidden on default
 	$('.lightbox').show();
 	var audioObject = null;
@@ -32,7 +31,6 @@ function getArtistInfo(artistName){
 
 	url = 'http://ws.audioscrobbler.com/2.0/';
 		$.getJSON(url, params, function(data){
-			console.log(data);
 			var storeImageData = "";
 			var artistArray = data.artist.similar.artist;
 			var mainArtistName = data.artist.name;
@@ -42,15 +40,14 @@ function getArtistInfo(artistName){
 			$('.lightbox').hide();
 
 			$.each(artistArray, function (key, value){
-				console.log('ran');
-				 var imageObj = value.image[3];
+				 var imageObj = value.image[2];
 				 var artistName = value.name;
 				 var imageUrl = imageObj['#text'];
 				 storeImageData = storeImageData + '<div class="newSong"><p class="nextArtistName">' + artistName + '</p><img alt="' + artistName + '"src="' + imageUrl + '"></div>';
 		});
 			$('#artImage').html('<img src="' + mainArtistImage + '">');
 			$('#songs').html(storeImageData);
-			$('#artistDiv').html('<h2 class="artName">' + mainArtistName + '<span id="pause" class="mega-octicon octicon-playback-pause"></span><span id="play" class="mega-octicon octicon-playback-play"></span></h2><div>' + artistBio + '</div>');
+			$('#artistDiv').html('<h2 class="artName">' + mainArtistName + '</h2><span id="pause" class="mega-octicon octicon-playback-pause"></span><span id="play" class="mega-octicon octicon-playback-play"></span><div>' + artistBio + '</div>');
 			$('#art-name').html(mainArtistName);
 			searchAlbums(artistName);
 });
@@ -76,9 +73,7 @@ function searchAlbums(userEntry) {
             market: "US"
         },
         success: function (response) {
-            console.log(response);
             var albumId = response.albums.items[0].id;
-            console.log(albumId);
 
 
             getTracks(albumId, function(data) {            
@@ -108,16 +103,11 @@ function searchAlbums(userEntry) {
  });
 
  document.getElementById('songs').addEventListener('click', function(e) {
- 
  //	//works to get name if click happens on img or p
- 	console.log('audioObject');
  	audioObject.pause();
  	var nextArtistName = e.target.parentNode.childNodes[0].innerHTML;
- 	console.log(nextArtistName);
-
  	var userInput = nextArtistName;
  	getArtistInfo(nextArtistName);
-	console.log(e.target);
 	}, false);
 };
 });
