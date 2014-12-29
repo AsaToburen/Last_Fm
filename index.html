@@ -1,39 +1,56 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-	<meta charset="UTF-8"><link rel="stylesheet" href="octicons/octicons.css">
-	<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<title>Music Explorer</title>
+    <meta charset="UTF-8">
+    <link href="octicons/octicons.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Questrial' rel=
+    'stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+
+    <title>Music Explorer</title>
 </head>
 
 <body>
-	<header>
-		<form id="searchNew">
-			<input type="search" id="new" placeholder="Search">
-		</form>
-		<h1>Discover New Music</h1>
-	</header>
-	<div class="lightbox">
-		<form id="userMusic" onsubmit="return false;">
-		<h2 class="main-heading">Enter your favorite artist to find new music<h2>
-		<input type="text" id="search_field" placeholder="Search by Artist" name="artist" size="30" autofocus required>
-				</form>
-	</div>
-	<div id="container">
-		<section id="mainArtist">
-			<div id="artImage"></div>
-			<div id="artistDiv"><span id="pause" class="mega-octicon octicon-playback-pause"></span><span id="play" class="mega-octicon octicon-playback-play"></span></div>
-			<div id="section-header"></div>
-		</section>
-		<section id="songs">
-		</section>
-	<div>
+    <header>
+        <form id="searchNew" name="searchNew">
+            <input id="new" placeholder="Search" type="search">
+        </form>
 
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+        <h1>Discover New Music</h1>
+    </header>
 
+    <div class="lightbox">
+        <form id="userMusic" name="userMusic" onsubmit="return false;">
+            <h2 class="main-heading">Enter your favorite artist to find new
+            music</h2>
+            <input autofocus="" id="search_field" name="artist" placeholder=
+            "Search by Artist" required="" size="30" type="text">
+        </form>
+    </div>
+
+    <div id="container">
+        <section id="mainArtist">
+            <div id="artImage">
+            </div>
+
+
+            <div id="artistDiv">
+                <span class="mega-octicon octicon-playback-pause" id=
+                "pause"></span><span class="mega-octicon octicon-playback-play"
+                id="play"></span>
+            </div>
+
+            <div id="section-header">
+            </div>
+        </section>
+
+        <section id="songs">
+        </section>
+
+        <div>
+            <script src="js/jquery.js" type="text/javascript"></script> <script src="js/app.js" type="text/javascript"></script> 
+        </div>
+    </div>
 </body>
 </html>
-
-

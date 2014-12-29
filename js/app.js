@@ -1,8 +1,5 @@
 $(document).ready(function(){
-	$('#container').hide();  ///set values in css to display hidden on default
-	$('.lightbox').show();
 	var audioObject = null;
-
 
 $('#userMusic').submit(function(event){
 	event.preventDefault();
@@ -37,7 +34,7 @@ function getArtistInfo(artistName){
 			var artistBio = data.artist.bio.summary;
 			var mainArtistImage = data.artist.image[4]['#text'];
 			$('#container').show();
-			$('.lightbox').hide();
+			$('.lightbox').fadeOut('slow');
 
 			$.each(artistArray, function (key, value){
 				 var imageObj = value.image[2];
@@ -45,7 +42,7 @@ function getArtistInfo(artistName){
 				 var imageUrl = imageObj['#text'];
 				 storeImageData = storeImageData + '<div class="newSong"><p class="nextArtistName">' + artistName + '</p><img alt="' + artistName + '"src="' + imageUrl + '"></div>';
 		});
-			$('#artImage').html('<img src="' + mainArtistImage + '">');
+			$('#artImage').html('<img max-width="450px" max-height="450px" src="' + mainArtistImage + '">');
 			$('#songs').html(storeImageData);
 			$('#artistDiv').html('<h2 class="artName">' + mainArtistName + '</h2><span id="pause" class="mega-octicon octicon-playback-pause"></span><span id="play" class="mega-octicon octicon-playback-play"></span><div>' + artistBio + '</div>');
 			$('#art-name').html(mainArtistName);
@@ -57,11 +54,10 @@ var getTracks = function (albumId, callback) {
     $.ajax({
         url: 'https://api.spotify.com/v1/albums/' + albumId,
         success: function (response) {
-        	            callback(response);
+        	       callback(response);
         }
     });
 };
-
 
 
 function searchAlbums(userEntry) {
@@ -74,7 +70,6 @@ function searchAlbums(userEntry) {
         },
         success: function (response) {
             var albumId = response.albums.items[0].id;
-
 
             getTracks(albumId, function(data) {            
                 audioObject = new Audio(data.tracks.items[0].preview_url);
@@ -99,11 +94,9 @@ function searchAlbums(userEntry) {
  	audioObject.pause();
  	$('#play').show();
 	$('#pause').hide();
-
  });
 
  document.getElementById('songs').addEventListener('click', function(e) {
- //	//works to get name if click happens on img or p
  	audioObject.pause();
  	var nextArtistName = e.target.parentNode.childNodes[0].innerHTML;
  	var userInput = nextArtistName;
